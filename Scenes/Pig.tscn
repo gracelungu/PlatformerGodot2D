@@ -1,0 +1,81 @@
+[gd_scene load_steps=31 format=2]
+
+[ext_resource path="res://Assets/Pig/Idle/tile006.png" type="Texture" id=1]
+[ext_resource path="res://src/Pig.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Pig/Idle/tile004.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Pig/Idle/tile002.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Pig/Idle/tile003.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Pig/Idle/tile009.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Pig/Idle/tile005.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Pig/Idle/tile010.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Pig/Dead/tile001.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Pig/Run/tile004.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Pig/Run/tile003.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Pig/Attack/tile002.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Pig/Dead/tile000.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Pig/Idle/tile008.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Pig/Idle/tile001.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Pig/Attack/tile004.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Pig/Attack/tile000.png" type="Texture" id=17]
+[ext_resource path="res://Assets/Pig/Dead/tile002.png" type="Texture" id=18]
+[ext_resource path="res://Assets/Pig/Dead/tile003.png" type="Texture" id=19]
+[ext_resource path="res://Assets/Pig/Attack/tile001.png" type="Texture" id=20]
+[ext_resource path="res://Assets/Pig/Run/tile005.png" type="Texture" id=21]
+[ext_resource path="res://Assets/Pig/Run/tile001.png" type="Texture" id=22]
+[ext_resource path="res://Assets/Pig/Run/tile002.png" type="Texture" id=23]
+[ext_resource path="res://Assets/Pig/Idle/tile007.png" type="Texture" id=24]
+[ext_resource path="res://Assets/Pig/Idle/tile000.png" type="Texture" id=25]
+[ext_resource path="res://Assets/Pig/Attack/tile003.png" type="Texture" id=26]
+[ext_resource path="res://Assets/Pig/Run/tile000.png" type="Texture" id=27]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 27 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 21 ) ],
+"loop": true,
+"name": "Run",
+"speed": 12.0
+}, {
+"frames": [ ExtResource( 25 ), ExtResource( 15 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 3 ), ExtResource( 7 ), ExtResource( 1 ), ExtResource( 24 ), ExtResource( 14 ), ExtResource( 6 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 13 ), ExtResource( 9 ), ExtResource( 18 ), ExtResource( 19 ) ],
+"loop": true,
+"name": "Dead",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 17 ), ExtResource( 20 ), ExtResource( 12 ), ExtResource( 26 ), ExtResource( 16 ) ],
+"loop": true,
+"name": "Attack",
+"speed": 8.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 6, 7 )
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 95.0053
+
+[node name="Pig" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 0, -14 )
+frames = SubResource( 1 )
+animation = "Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 3, -7 )
+shape = SubResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="."]
+modulate = Color( 0.172549, 1, 0.729412, 1 )
+show_behind_parent = true
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 3, -9 )
+shape = SubResource( 3 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_body_exited"]
