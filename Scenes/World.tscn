@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scenes/Pig.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Tiles/Terrain (32x32).png" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Assets/Stuffs/Idle.png" type="Texture" id=5]
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/Global.gd" type="Script" id=7]
+[ext_resource path="res://Scenes/Bomb.tscn" type="PackedScene" id=8]
 
 [sub_resource type="TileSet" id=1]
 0/name = "Terrain (32x32).png 0"
@@ -413,5 +414,8 @@ collision_mask = 2
 
 [node name="Player" parent="." instance=ExtResource( 6 )]
 position = Vector2( 98, 123 )
+
+[node name="Bomb" parent="." instance=ExtResource( 8 )]
+position = Vector2( 267.979, 161.044 )
 
 [editable path="Player"]

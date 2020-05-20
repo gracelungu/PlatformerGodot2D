@@ -24,7 +24,7 @@ func apply_gravity(delta):
 func move_right_and_left(delta):
 	x_input = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	
-	if x_input != 0 and not dead:
+	if x_input != 0 and attackTimer == 0 and not dead:
 		motion.x += x_input * ACCELERATION * delta
 		motion.x = clamp(motion.x, -MAX_SPEED, MAX_SPEED)
 		animatedSprite.flip_h = x_input < 0
@@ -63,13 +63,16 @@ func handle_attack():
 func apply_motion():
 	motion = move_and_slide(motion, Vector2.UP)
 	
+func set_deaf_timer():
+	dead = true
+	animatedSprite.play("Dead")
+	
+	deafTimer.set_wait_time(1)
+	deafTimer.start()
+	
 func _on_pig_detector_entered(body):
 	if body.name == "Pig":
-		dead = true
-		animatedSprite.play("Dead")
-		
-		deafTimer.set_wait_time(1)
-		deafTimer.start()
+		set_deaf_timer()
 	
 func _on_EnemyHit_detector_entered(body):
 	if body.name == "Pig":
@@ -81,8 +84,11 @@ func _on_EnemyHit_detector_exited(body):
 
 func handle_hit_enemy():
 	if attack_ready and Input.is_action_just_pressed("attack"):
-		print("=========== TRIGGER")
 		emit_signal("attack", body_to_hit)	
+
+func _on_entered_bomb(body):
+	if body.name == "Player":
+		set_deaf_timer()
 		
 func _on_deafTimer_timeout():
 	get_tree().reload_current_scene()

@@ -62,10 +62,16 @@ func _on_hit_detector_exited(body):
 func handle_idle():
 	if not in_body and not player_hit:
 		animatedSprite.play("Idle")
-
-func _on_pig_hit(body):
+		
+func eliminate_current_pig(body):
 	if body.name == "Pig":
 		queue_free()
+
+func _on_pig_hit(body):
+	eliminate_current_pig(body)
+
+func _on_entered_bomb(body):
+	eliminate_current_pig(body)
 
 func _physics_process(delta): 
 	move_and_slide(motion)
