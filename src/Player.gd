@@ -12,19 +12,33 @@ var attackTimer = 0
 var dead = false
 var attack_ready = false
 var body_to_hit
+var go = false
+var leaving = false
 
 onready var animatedSprite = $AnimatedSprite
+onready var launchTimer = $LaunchTimer
+onready var leaveTimer = $LeaveTimer
 onready var deafTimer = $DeafTimer
 
 signal attack(body)
 
+func _ready():
+	launchTimer.set_wait_time(1.2);
+	launchTimer.start()
+	animatedSprite.play("Door Out")
+
 func apply_gravity(delta):
 	motion.y += GRAVITY * delta
+	
+func can_move():
+	if go and not leaving:
+		return true
+	return false
 
 func move_right_and_left(delta):
 	x_input = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
 	
-	if x_input != 0 and attackTimer == 0 and not dead:
+	if can_move() and x_input != 0 and attackTimer == 0 and not dead:
 		motion.x += x_input * ACCELERATION * delta
 		motion.x = clamp(motion.x, -MAX_SPEED, MAX_SPEED)
 		animatedSprite.flip_h = x_input < 0
@@ -50,7 +64,7 @@ func handle_jump():
 			
 func handle_idle():
 	if is_on_floor():
-		if x_input == 0 and attackTimer == 0 and not dead:
+		if can_move() and x_input == 0 and attackTimer == 0 and not dead:
 			animatedSprite.play("Idle")
 			
 func handle_attack():
@@ -63,16 +77,16 @@ func handle_attack():
 func apply_motion():
 	motion = move_and_slide(motion, Vector2.UP)
 	
-func set_deaf_timer():
+func set_deaf_timer(time):
 	dead = true
 	animatedSprite.play("Dead")
 	
-	deafTimer.set_wait_time(1)
+	deafTimer.set_wait_time(time)
 	deafTimer.start()
 	
 func _on_pig_detector_entered(body):
 	if body.name == "Pig":
-		set_deaf_timer()
+		set_deaf_timer(1)
 	
 func _on_EnemyHit_detector_entered(body):
 	if body.name == "Pig":
@@ -88,10 +102,18 @@ func handle_hit_enemy():
 
 func _on_entered_bomb(body):
 	if body.name == "Player":
-		set_deaf_timer()
+		set_deaf_timer(1)
 		
 func _on_deafTimer_timeout():
 	get_tree().reload_current_scene()
+	
+func _on_leave_scene(body):
+	if body.name == "Player":
+		leaving = true
+		leaveTimer.set_wait_time(1.2);
+		leaveTimer.start()
+	
+		animatedSprite.play("Door In")
 	
 func _physics_process(delta):
 	apply_gravity(delta)
@@ -102,3 +124,10 @@ func _physics_process(delta):
 	handle_hit_enemy()
 	
 	apply_motion()
+
+
+func _on_launch_timer_timeout():
+	go = true
+
+func _on_LeaveTimer_timeout():
+	get_tree().reload_current_scene()

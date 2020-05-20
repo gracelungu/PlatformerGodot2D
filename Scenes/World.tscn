@@ -3,7 +3,7 @@
 [ext_resource path="res://Scenes/Pig.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Tiles/Terrain (32x32).png" type="Texture" id=2]
 [ext_resource path="res://Assets/Tiles/Decorations (32x32).png" type="Texture" id=3]
-[ext_resource path="res://Assets/Stuffs/Door_Idle.png" type="Texture" id=4]
+[ext_resource path="res://Scenes/Door.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/Stuffs/Idle.png" type="Texture" id=5]
 [ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/Global.gd" type="Script" id=7]
@@ -374,10 +374,6 @@ shape = SubResource( 8 )
 position = Vector2( 272, 86 )
 shape = SubResource( 9 )
 
-[node name="Door" type="Sprite" parent="."]
-position = Vector2( 135, 116 )
-texture = ExtResource( 4 )
-
 [node name="Box" type="StaticBody2D" parent="."]
 
 [node name="Sprite" type="Sprite" parent="Box"]
@@ -408,14 +404,19 @@ texture = ExtResource( 5 )
 position = Vector2( 357, 120 )
 shape = SubResource( 10 )
 
+[node name="Door2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 134.296, 116.209 )
+
+[node name="Door" parent="." instance=ExtResource( 4 )]
+position = Vector2( 269.219, 52.0941 )
+is_leave_door = true
+
 [node name="Pig" parent="." instance=ExtResource( 1 )]
 position = Vector2( 300.297, 143.642 )
 collision_mask = 2
 
 [node name="Player" parent="." instance=ExtResource( 6 )]
-position = Vector2( 98, 123 )
+position = Vector2( 149.603, 155.798 )
 
 [node name="Bomb" parent="." instance=ExtResource( 8 )]
 position = Vector2( 267.979, 161.044 )
-
-[editable path="Player"]
