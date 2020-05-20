@@ -108,6 +108,7 @@ func _on_deafTimer_timeout():
 	get_tree().reload_current_scene()
 	
 func _on_leave_scene(body):
+	print("LEAVE ", body.name)
 	if body.name == "Player":
 		leaving = true
 		leaveTimer.set_wait_time(1.2);
