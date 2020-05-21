@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://Assets/Pig/Idle/tile006.png" type="Texture" id=1]
 [ext_resource path="res://src/Pig.gd" type="Script" id=2]
@@ -27,6 +27,7 @@
 [ext_resource path="res://Assets/Pig/Idle/tile000.png" type="Texture" id=25]
 [ext_resource path="res://Assets/Pig/Attack/tile003.png" type="Texture" id=26]
 [ext_resource path="res://Assets/Pig/Run/tile000.png" type="Texture" id=27]
+[ext_resource path="res://Assets/Sound/Metal Slam/POL-metal-slam-10.wav" type="AudioStream" id=28]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -100,6 +101,9 @@ shape = SubResource( 4 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerTopHitDetector"]
 position = Vector2( 3, -18 )
 shape = SubResource( 5 )
+
+[node name="AttackSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 28 )
 [connection signal="body_entered" from="PlayerDetector" to="." method="_on_body_entered"]
 [connection signal="body_exited" from="PlayerDetector" to="." method="_on_body_exited"]
 [connection signal="body_entered" from="PlayerHitDetector" to="." method="_on_hit_detector_entered"]

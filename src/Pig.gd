@@ -2,6 +2,7 @@ extends Actor
 
 onready var pig = $Pig
 onready var animatedSprite = $AnimatedSprite
+onready var attackSound = $AttackSound
 
 const SPEED = 3500
 const FRICTION = 0.02
@@ -54,6 +55,7 @@ func _on_hit_detector_entered(body):
 	if body.name == "Player":
 		player_hit = true
 		animatedSprite.play("Attack")
+		attackSound.play()
 
 func _on_hit_detector_exited(body):
 	if body.name == "Player":

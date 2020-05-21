@@ -1,7 +1,7 @@
 extends Actor
 
 const ACCELERATION = 512
-const MAX_SPEED = 64
+const MAX_SPEED = 90
 const FRICTION = 0.25
 const AIR_RESISTANCE = 0.01
 const JUMP_FORCE = 350
@@ -14,11 +14,17 @@ var attack_ready = false
 var body_to_hit
 var go = false
 var leaving = false
+export var shake = false
 
 onready var animatedSprite = $AnimatedSprite
 onready var launchTimer = $LaunchTimer
 onready var leaveTimer = $LeaveTimer
 onready var deafTimer = $DeafTimer
+onready var attackSound = $Sounds/AttackSound
+onready var jumpSound = $Sounds/JumpSound
+onready var runSound = $Sounds/RunSound
+onready var tween = $Camera2D/Tween
+onready var animationPlayer = $AnimationPlayer
 
 signal attack(body)
 
@@ -27,6 +33,9 @@ func _ready():
 	launchTimer.start()
 	animatedSprite.play("Door Out")
 
+func shake_camera():
+	animationPlayer.play("shake_camera")
+
 func apply_gravity(delta):
 	motion.y += GRAVITY * delta
 	
@@ -34,6 +43,10 @@ func can_move():
 	if go and not leaving:
 		return true
 	return false
+	
+func play_run_sound():
+	if Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
+			runSound.play()
 
 func move_right_and_left(delta):
 	x_input = Input.get_action_strength("move_right") - Input.get_action_strength("move_left")
@@ -53,6 +66,7 @@ func handle_jump():
 			
 		if Input.is_action_just_pressed("jump"):
 			motion.y = -JUMP_FORCE
+			jumpSound.play()
 			
 	else: # In the air
 		if Input.is_action_just_released("jump") and motion.y < -JUMP_FORCE / 2:
@@ -68,9 +82,12 @@ func handle_idle():
 			animatedSprite.play("Idle")
 			
 func handle_attack():
-	if Input.is_action_just_pressed("attack") and not dead:
+	if can_move() and Input.is_action_just_pressed("attack") and not dead:
 		attackTimer = 16
 		animatedSprite.play("Attack")
+		attackSound.play()
+		shake_camera()
+		
 	if attackTimer > 0:
 		attackTimer -= 1
 			
@@ -86,7 +103,7 @@ func set_deaf_timer(time):
 	
 func _on_pig_detector_entered(body):
 	if body.name == "Pig":
-		set_deaf_timer(1)
+		set_deaf_timer(2)
 	
 func _on_EnemyHit_detector_entered(body):
 	if body.name == "Pig":
@@ -99,6 +116,7 @@ func _on_EnemyHit_detector_exited(body):
 func handle_hit_enemy():
 	if attack_ready and Input.is_action_just_pressed("attack"):
 		emit_signal("attack", body_to_hit)	
+		shake_camera()
 
 func _on_entered_bomb(body):
 	if body.name == "Player":
@@ -119,6 +137,7 @@ func _on_leave_scene(body):
 func _physics_process(delta):
 	apply_gravity(delta)
 	move_right_and_left(delta)
+	play_run_sound()
 	handle_idle()
 	handle_jump()
 	handle_attack()
