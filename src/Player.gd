@@ -4,7 +4,7 @@ const ACCELERATION = 512
 const MAX_SPEED = 90
 const FRICTION = 0.25
 const AIR_RESISTANCE = 0.01
-const JUMP_FORCE = 350
+const JUMP_FORCE = 370
 
 var motion = Vector2.ZERO
 var x_input = 0
@@ -14,7 +14,9 @@ var attack_ready = false
 var body_to_hit
 var go = false
 var leaving = false
-export var shake = false
+
+var shake = false
+var current_level = 1
 
 onready var animatedSprite = $AnimatedSprite
 onready var launchTimer = $LaunchTimer
@@ -97,6 +99,7 @@ func apply_motion():
 func set_deaf_timer(time):
 	dead = true
 	animatedSprite.play("Dead")
+	shake_camera()
 	
 	deafTimer.set_wait_time(time)
 	deafTimer.start()
@@ -120,7 +123,7 @@ func handle_hit_enemy():
 
 func _on_entered_bomb(body):
 	if body.name == "Player":
-		set_deaf_timer(1)
+		set_deaf_timer(2)
 		
 func _on_deafTimer_timeout():
 	get_tree().reload_current_scene()
@@ -150,4 +153,5 @@ func _on_launch_timer_timeout():
 	go = true
 
 func _on_LeaveTimer_timeout():
-	get_tree().reload_current_scene()
+	current_level +=1
+	get_tree().change_scene("res://Scenes/Levels/Level"+str(current_level)+".tscn")
