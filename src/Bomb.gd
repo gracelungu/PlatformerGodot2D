@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 onready var animatedSprite = $AnimatedSprite
+onready var explosionSound = $ExplosionSound
 
 onready var timer = $Timer
 
@@ -13,8 +14,9 @@ func set_timer():
 func _on_bomb_entered(body):
 	if body.name == "Player" or body.name == "Pig":
 		animatedSprite.play("Explosion")
-		emit_signal("explode", body)
+		explosionSound.play()
 		
+		emit_signal("explode", body)
 		set_timer()
 
 func _on_Timer_timeout():

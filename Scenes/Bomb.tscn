@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Assets/Bomb/Boom/tile004.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Bomb/Boom/tile005.png" type="Texture" id=2]
@@ -8,8 +8,9 @@
 [ext_resource path="res://Assets/Bomb/Boom/tile003.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Bomb/Boom/tile002.png" type="Texture" id=7]
 [ext_resource path="res://src/Bomb.gd" type="Script" id=8]
+[ext_resource path="res://Assets/Sound/explosion.wav" type="AudioStream" id=9]
 
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 1 ), ExtResource( 2 ) ],
 "loop": false,
@@ -22,7 +23,7 @@ animations = [ {
 "speed": 1.0
 } ]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id=2]
 radius = 5.0
 
 [sub_resource type="CircleShape2D" id=3]
@@ -35,13 +36,13 @@ script = ExtResource( 8 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -28 )
-frames = SubResource( 2 )
+frames = SubResource( 1 )
 animation = "Idle"
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 1, -23 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -49,5 +50,9 @@ shape = SubResource( 1 )
 modulate = Color( 0.556863, 0.14902, 0.14902, 1 )
 position = Vector2( 1, -23 )
 shape = SubResource( 3 )
+
+[node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 9 )
+volume_db = -16.0
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_bomb_entered"]

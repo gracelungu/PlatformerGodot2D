@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Fonts/BigSpace-rPKx.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://src/MenuButton.gd" type="Script" id=2]
+
+[sub_resource type="StyleBoxFlat" id=2]
+bg_color = Color( 0.247059, 0.219608, 0.317647, 0 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+font_data = ExtResource( 1 )
+
+[node name="Menu Button" type="Button"]
+margin_right = 200.0
+margin_bottom = 60.0
+rect_min_size = Vector2( 200, 0 )
+mouse_default_cursor_shape = 2
+custom_styles/focus = SubResource( 2 )
+flat = true
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color_shadow = Color( 0.411765, 0.254902, 0.254902, 1 )
+custom_constants/shadow_offset_x = 0
+custom_constants/shadow_offset_y = 5
+text = "Label
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="mouse_entered" from="." to="." method="_on_Menu_Button_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_Menu_Button_mouse_exited"]

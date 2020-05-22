@@ -1,4 +1,5 @@
 extends Actor
+const sauvegard = preload("res://src/Save.gd")
 
 const ACCELERATION = 512
 const MAX_SPEED = 90
@@ -151,7 +152,11 @@ func _physics_process(delta):
 
 func _on_launch_timer_timeout():
 	go = true
+	
+func save_progress(level):
+	sauvegard.save({"level": level})
 
 func _on_LeaveTimer_timeout():
 	current_level +=1
+	save_progress(current_level)
 	get_tree().change_scene("res://Scenes/Levels/Level"+str(current_level)+".tscn")
