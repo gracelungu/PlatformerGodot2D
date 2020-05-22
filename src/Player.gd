@@ -1,5 +1,7 @@
 extends Actor
+
 const sauvegard = preload("res://src/Save.gd")
+const helper = preload("res://src/Helper.gd")
 
 const ACCELERATION = 512
 const MAX_SPEED = 90
@@ -15,9 +17,12 @@ var attack_ready = false
 var body_to_hit
 var go = false
 var leaving = false
+var can_hit_bomb = false
+var current_bomb 
 
 var shake = false
 var current_level = 1
+export var player_side = 1
 
 onready var animatedSprite = $AnimatedSprite
 onready var launchTimer = $LaunchTimer
@@ -30,6 +35,7 @@ onready var tween = $Camera2D/Tween
 onready var animationPlayer = $AnimationPlayer
 
 signal attack(body)
+signal bomb_was_hit(bomb_name)
 
 func _ready():
 	launchTimer.set_wait_time(1.2);
@@ -83,7 +89,13 @@ func handle_idle():
 	if is_on_floor():
 		if can_move() and x_input == 0 and attackTimer == 0 and not dead:
 			animatedSprite.play("Idle")
-			
+
+func can_attack_pig():
+	if can_move() and attack_ready and Input.is_action_just_pressed("attack") and not dead:
+		return true
+	else:
+		return false
+		
 func handle_attack():
 	if can_move() and Input.is_action_just_pressed("attack") and not dead:
 		attackTimer = 16
@@ -98,7 +110,6 @@ func apply_motion():
 	motion = move_and_slide(motion, Vector2.UP)
 	
 func set_deaf_timer(time):
-	dead = true
 	animatedSprite.play("Dead")
 	shake_camera()
 	
@@ -106,11 +117,12 @@ func set_deaf_timer(time):
 	deafTimer.start()
 	
 func _on_pig_detector_entered(body):
-	if body.name == "Pig":
+	if helper.is_pig(body.name):
+		dead = true
 		set_deaf_timer(2)
 	
 func _on_EnemyHit_detector_entered(body):
-	if body.name == "Pig":
+	if helper.is_pig(body.name):
 		attack_ready = true
 		body_to_hit = body
 		
@@ -118,19 +130,32 @@ func _on_EnemyHit_detector_exited(body):
 	attack_ready = false
 
 func handle_hit_enemy():
-	if attack_ready and Input.is_action_just_pressed("attack"):
+	if can_attack_pig():
 		emit_signal("attack", body_to_hit)	
 		shake_camera()
 
 func _on_entered_bomb(body):
 	if body.name == "Player":
+		dead = true
+		set_deaf_timer(2)
+		
+func _on_player_can_hit_bomb(body):
+	can_hit_bomb = not can_hit_bomb
+	if can_hit_bomb:
+		current_bomb = body.name
+	else:
+		current_bomb = null
+	
+func on_hit_bomb():
+	if can_hit_bomb and can_move() and Input.is_action_just_pressed("attack") and not dead:
+		emit_signal("bomb_was_hit", current_bomb)
+		dead = true
 		set_deaf_timer(2)
 		
 func _on_deafTimer_timeout():
 	get_tree().reload_current_scene()
 	
 func _on_leave_scene(body):
-	print("LEAVE ", body.name)
 	if body.name == "Player":
 		leaving = true
 		leaveTimer.set_wait_time(1.2);
@@ -139,16 +164,21 @@ func _on_leave_scene(body):
 		animatedSprite.play("Door In")
 	
 func _physics_process(delta):
+	menu_pressed()
 	apply_gravity(delta)
 	move_right_and_left(delta)
 	play_run_sound()
 	handle_idle()
 	handle_jump()
-	handle_attack()
 	handle_hit_enemy()
+	handle_attack()
+	on_hit_bomb()
 	
 	apply_motion()
-
+	
+func menu_pressed():
+	if Input.is_action_just_pressed("menu"):
+		get_tree().change_scene("res://Scenes/StartScene.tscn")
 
 func _on_launch_timer_timeout():
 	go = true

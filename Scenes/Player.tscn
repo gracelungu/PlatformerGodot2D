@@ -51,25 +51,30 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 27 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 24 ), ExtResource( 7 ), ExtResource( 23 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 25 ), ExtResource( 26 ) ],
-"loop": true,
-"name": "Idle",
-"speed": 5.0
-}, {
-"frames": [ ExtResource( 16 ), ExtResource( 17 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 4 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ) ],
-"loop": true,
-"name": "Run",
-"speed": 12.0
-}, {
 "frames": [ ExtResource( 12 ), ExtResource( 11 ), ExtResource( 18 ) ],
 "loop": true,
 "name": "Attack",
 "speed": 6.0
 }, {
+"frames": [ ExtResource( 29 ) ],
+"loop": false,
+"name": "Fall",
+"speed": 0.0
+}, {
+"frames": [ ExtResource( 40 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 44 ), ExtResource( 43 ), ExtResource( 45 ), ExtResource( 34 ) ],
+"loop": true,
+"name": "Door In",
+"speed": 5.0
+}, {
 "frames": [ ExtResource( 10 ), ExtResource( 1 ), ExtResource( 28 ), ExtResource( 5 ) ],
 "loop": false,
 "name": "Dead",
 "speed": 3.0
+}, {
+"frames": [ ExtResource( 30 ) ],
+"loop": false,
+"name": "Hit",
+"speed": 0.0
 }, {
 "frames": [ ExtResource( 41 ), ExtResource( 37 ), ExtResource( 31 ), ExtResource( 32 ), ExtResource( 35 ), ExtResource( 36 ), ExtResource( 42 ), ExtResource( 33 ) ],
 "loop": false,
@@ -81,20 +86,15 @@ animations = [ {
 "name": "Jump",
 "speed": 0.0
 }, {
-"frames": [ ExtResource( 30 ) ],
-"loop": false,
-"name": "Hit",
-"speed": 0.0
-}, {
-"frames": [ ExtResource( 29 ) ],
-"loop": false,
-"name": "Fall",
-"speed": 0.0
-}, {
-"frames": [ ExtResource( 40 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 44 ), ExtResource( 43 ), ExtResource( 45 ), ExtResource( 34 ) ],
+"frames": [ ExtResource( 27 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 24 ), ExtResource( 7 ), ExtResource( 23 ), ExtResource( 3 ), ExtResource( 6 ), ExtResource( 25 ), ExtResource( 26 ) ],
 "loop": true,
-"name": "Door In",
+"name": "Idle",
 "speed": 5.0
+}, {
+"frames": [ ExtResource( 16 ), ExtResource( 17 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 4 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ) ],
+"loop": true,
+"name": "Run",
+"speed": 12.0
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
@@ -104,7 +104,7 @@ extents = Vector2( 10, 13 )
 radius = 23.0015
 
 [sub_resource type="CircleShape2D" id=4]
-radius = 12.0416
+radius = 41.0
 
 [sub_resource type="Animation" id=5]
 resource_name = "shake_camera"
@@ -164,7 +164,7 @@ shape = SubResource( 3 )
 [node name="EnemyHit" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyHit"]
-position = Vector2( 35, -24 )
+position = Vector2( 8, -24 )
 shape = SubResource( 4 )
 
 [node name="Sounds" type="Node2D" parent="."]

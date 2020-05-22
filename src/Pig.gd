@@ -1,5 +1,7 @@
 extends Actor
 
+const helper = preload("res://src/Helper.gd")
+
 onready var pig = $Pig
 onready var animatedSprite = $AnimatedSprite
 onready var attackSound = $AttackSound
@@ -66,8 +68,8 @@ func handle_idle():
 		animatedSprite.play("Idle")
 		
 func eliminate_current_pig(body):
-	if body.name == "Pig":
-		queue_free()
+	if helper.is_pig(body.name):
+		body.queue_free()
 
 func _on_pig_hit(body):
 	eliminate_current_pig(body)

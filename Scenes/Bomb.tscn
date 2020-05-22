@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Assets/Bomb/Boom/tile004.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Bomb/Boom/tile005.png" type="Texture" id=2]
@@ -12,15 +12,15 @@
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 1 ), ExtResource( 2 ) ],
-"loop": false,
-"name": "Explosion",
-"speed": 10.0
-}, {
 "frames": [ ExtResource( 3 ) ],
 "loop": false,
 "name": "Idle",
 "speed": 1.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 1 ), ExtResource( 2 ) ],
+"loop": false,
+"name": "Explosion",
+"speed": 10.0
 } ]
 
 [sub_resource type="CircleShape2D" id=2]
@@ -28,6 +28,9 @@ radius = 5.0
 
 [sub_resource type="CircleShape2D" id=3]
 radius = 6.0
+
+[sub_resource type="CircleShape2D" id=4]
+radius = 33.0151
 
 [node name="Bomb" type="KinematicBody2D"]
 script = ExtResource( 8 )
@@ -54,5 +57,13 @@ shape = SubResource( 3 )
 [node name="ExplosionSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource( 9 )
 volume_db = -16.0
+
+[node name="PlayerHitBombDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerHitBombDetector"]
+position = Vector2( 1, -23 )
+shape = SubResource( 4 )
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_bomb_entered"]
+[connection signal="body_entered" from="PlayerHitBombDetector" to="." method="_on_player_hit_detector_entered"]
+[connection signal="body_exited" from="PlayerHitBombDetector" to="." method="_on_player_can_hit_bomb_exited"]

@@ -103,15 +103,15 @@ text = "Version 1.0.0 by Grace Lungu
 Sound  playonloop.com
 "
 
+[node name="controls" type="Sprite" parent="."]
+position = Vector2( 762, 580 )
+texture = ExtResource( 9 )
+
 [node name="Fade in" parent="." instance=ExtResource( 5 )]
 script = ExtResource( 7 )
 
 [node name="Sound" parent="." instance=ExtResource( 6 )]
 position = Vector2( 151, 426 )
-
-[node name="controls" type="Sprite" parent="."]
-position = Vector2( 762, 580 )
-texture = ExtResource( 9 )
 
 [editable path="Menu/CenterRow/Buttons/Menu Button"]
 

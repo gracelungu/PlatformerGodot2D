@@ -22,10 +22,11 @@ tile_data = PoolIntArray( -262164, 8, 0, -262162, 6, 0, -262160, 6, 0, -262158, 
 
 [node name="Ornements" parent="." instance=ExtResource( 1 )]
 position = Vector2( 151, 137 )
-tile_data = PoolIntArray( -393215, 5, 0, -393209, 2, 0, 7, 1, 0 )
+tile_data = PoolIntArray( -393215, 5, 0, -393209, 2, 0, 262152, 1, 0 )
 
 [node name="Door" parent="." instance=ExtResource( 5 )]
 position = Vector2( 415, 194 )
+is_leave_door = true
 
 [node name="Door2" parent="." instance=ExtResource( 5 )]
 position = Vector2( 53, 130 )

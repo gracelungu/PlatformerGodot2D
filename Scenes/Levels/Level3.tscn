@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scenes/TileMap.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Ornements.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Bomb.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scenes/Pig.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/Global.gd" type="Script" id=6]
+
+[node name="Level3" type="Node2D"]
+position = Vector2( 2, 0 )
+script = ExtResource( 6 )
+
+[node name="TileMap" parent="." instance=ExtResource( 1 )]
+position = Vector2( -54, 295 )
+tile_data = PoolIntArray( -1310719, 8, 0, -1310717, 6, 0, -1310716, 6, 0, -1310715, 6, 0, -1310714, 6, 0, -1310713, 6, 0, -1310712, 6, 0, -1310711, 6, 0, -1310710, 6, 0, -1310709, 6, 0, -1310708, 6, 0, -1310706, 6, 0, -1310704, 9, 0, -1310701, 8, 0, -1310699, 6, 0, -1310698, 6, 0, -1310697, 6, 0, -1310696, 6, 0, -1310695, 6, 0, -1310694, 6, 0, -1310693, 6, 0, -1310692, 6, 0, -1310691, 6, 0, -1310690, 6, 0, -1310689, 6, 0, -1310688, 6, 0, -1310687, 6, 0, -1310685, 9, 0, -1179647, 4, 0, -1179632, 3, 0, -1179629, 4, 0, -1179613, 3, 0, -1114111, 4, 0, -1114093, 4, 0, -1114077, 3, 0, -1048575, 4, 0, -1048560, 3, 0, -1048557, 4, 0, -1048541, 3, 0, -983039, 4, 0, -983024, 3, 0, -983021, 4, 0, -983005, 3, 0, -917503, 4, 0, -917488, 3, 0, -917469, 3, 0, -851967, 4, 0, -851952, 3, 0, -851949, 4, 0, -851933, 3, 0, -786416, 3, 0, -786413, 4, 0, -786397, 3, 0, -720895, 10, 0, -720893, 1, 0, -720892, 1, 0, -720891, 1, 0, -720890, 1, 0, -720889, 1, 0, -720888, 1, 0, -720887, 1, 0, -720885, 2, 0, -720861, 3, 0, -655344, 5, 0, -655342, 6, 0, -655341, 7, 0, -655325, 3, 0, -589818, 8, 0, -589816, 6, 0, -589815, 6, 0, -589813, 7, 0, -589789, 3, 0, -524253, 3, 0, -458746, 4, 0, -458717, 3, 0, -393210, 4, 0, -393191, 20, 0, -393181, 3, 0, -262138, 10, 0, -262136, 1, 0, -262135, 1, 0, -262134, 1, 0, -262133, 1, 0, -262132, 1, 0, -262131, 1, 0, -262130, 1, 0, -262129, 1, 0, -262128, 1, 0, -262127, 1, 0, -262126, 1, 0, -262125, 1, 0, -262124, 1, 0, -262123, 1, 0, -262122, 1, 0, -262121, 1, 0, -262119, 13, 0, -262117, 1, 0, -262116, 1, 0, -262115, 1, 0, -262114, 1, 0, -262113, 1, 0, -262112, 1, 0, -262111, 1, 0, -262109, 11, 0 )
+
+[node name="Ornements" parent="." instance=ExtResource( 2 )]
+position = Vector2( -175, 474 )
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( 18, 121 )
+player_side = -1
+
+[node name="Bombs" type="Node2D" parent="."]
+
+[node name="Bomb" parent="Bombs" instance=ExtResource( 4 )]
+position = Vector2( 137, 249 )
+
+[node name="Bomb2" parent="Bombs" instance=ExtResource( 4 )]
+position = Vector2( 414, 249 )
+
+[node name="Pigs" type="Node2D" parent="."]
+
+[node name="Pig" parent="Pigs" instance=ExtResource( 5 )]
+position = Vector2( 132, 120 )
+
+[node name="Pig2" parent="Pigs" instance=ExtResource( 5 )]
+position = Vector2( 232, 230 )
