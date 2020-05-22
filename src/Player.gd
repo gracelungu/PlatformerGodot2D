@@ -4,7 +4,7 @@ const sauvegard = preload("res://src/Save.gd")
 const helper = preload("res://src/Helper.gd")
 
 const ACCELERATION = 512
-const MAX_SPEED = 90
+const MAX_SPEED = 100
 const FRICTION = 0.25
 const AIR_RESISTANCE = 0.01
 const JUMP_FORCE = 370
@@ -21,7 +21,7 @@ var can_hit_bomb = false
 var current_bomb 
 
 var shake = false
-var current_level = 1
+export var current_level = 1
 export var player_side = 1
 
 onready var animatedSprite = $AnimatedSprite
@@ -91,7 +91,7 @@ func handle_idle():
 			animatedSprite.play("Idle")
 
 func can_attack_pig():
-	if can_move() and attack_ready and Input.is_action_just_pressed("attack") and not dead:
+	if attack_ready and Input.is_action_just_pressed("attack") and not dead:
 		return true
 	else:
 		return false

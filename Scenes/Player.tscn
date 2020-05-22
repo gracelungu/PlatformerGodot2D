@@ -101,10 +101,10 @@ animations = [ {
 extents = Vector2( 10, 13 )
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 23.0015
+radius = 23.0
 
 [sub_resource type="CircleShape2D" id=4]
-radius = 41.0
+radius = 43.0465
 
 [sub_resource type="Animation" id=5]
 resource_name = "shake_camera"

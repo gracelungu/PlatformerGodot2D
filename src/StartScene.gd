@@ -11,6 +11,7 @@ func _on_start_pressed():
 
 func _on_continue_pressed():
 	var data = sauvegard.load()
+	print(data)
 	if data:
 		if data.level:
 			get_tree().change_scene("res://Scenes/Levels/Level"+str(data.level)+".tscn")
@@ -18,3 +19,7 @@ func _on_continue_pressed():
 			get_tree().change_scene("res://Scenes/Levels/Level1.tscn")
 	else:
 		get_tree().change_scene("res://Scenes/Levels/Level1.tscn")
+
+#if last level
+	var level = data.level - 1;
+	get_tree().change_scene("res://Scenes/Levels/Level"+str(level)+".tscn")

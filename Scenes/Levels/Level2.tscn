@@ -33,6 +33,7 @@ position = Vector2( 53, 130 )
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
 position = Vector2( 58, 170 )
+current_level = 2
 
 [node name="Bombs" type="Node2D" parent="."]
 

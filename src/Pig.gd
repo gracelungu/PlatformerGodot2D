@@ -9,15 +9,25 @@ onready var attackSound = $AttackSound
 const SPEED = 3500
 const FRICTION = 0.02
 const ACCELERATION = 2000
+const PIG_GRAVITY = 800
 
 var count = 0
 var motion = Vector2.ZERO
-var direction = -1
+export var direction = -1
 var in_body = false
 var player_hit = false
+export var pig_runner = false
+
+func _ready():
+	move_runner()
+	
+func move_runner():
+	if pig_runner and not player_hit:
+		animatedSprite.play("Run")
+		motion.x = direction * ACCELERATION * get_physics_process_delta_time()
 
 func apply_gravity(delta):
-	motion.y += GRAVITY * delta
+	motion.y += PIG_GRAVITY * delta
 	
 func is_on_wall():
 	if is_on_wall():
@@ -64,7 +74,7 @@ func _on_hit_detector_exited(body):
 		player_hit = false
 	
 func handle_idle():
-	if not in_body and not player_hit:
+	if not in_body and not player_hit and motion.x == 0:
 		animatedSprite.play("Idle")
 		
 func eliminate_current_pig(body):

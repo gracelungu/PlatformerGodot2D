@@ -12,8 +12,8 @@ func _ready():
 			$Player.connect("bomb_was_hit", bomb, "_on_bomb_was_hit")
 			
 	if $Pigs:
-		for bomb in $Bombs.get_children():
-			for pig in $Pigs.get_children():
+		for pig in $Pigs.get_children():
+			for bomb in $Bombs.get_children():
 				bomb.connect("explode", pig, "_on_entered_bomb")
 	
 	if $Door:
