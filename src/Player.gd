@@ -4,7 +4,7 @@ const sauvegard = preload("res://src/Save.gd")
 const helper = preload("res://src/Helper.gd")
 
 const ACCELERATION = 512
-const MAX_SPEED = 100
+const MAX_SPEED = 110
 const FRICTION = 0.25
 const AIR_RESISTANCE = 0.01
 const JUMP_FORCE = 370
@@ -187,6 +187,9 @@ func save_progress(level):
 	sauvegard.save({"level": level})
 
 func _on_LeaveTimer_timeout():
+	if current_level == 0:
+		return get_tree().change_scene("res://Scenes/StartScene.tscn")
+		
 	current_level +=1
 	save_progress(current_level)
 	get_tree().change_scene("res://Scenes/Levels/Level"+str(current_level)+".tscn")

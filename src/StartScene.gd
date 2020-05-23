@@ -14,6 +14,8 @@ func _on_continue_pressed():
 	print(data)
 	if data:
 		if data.level:
+			if data.level > 8:
+				return get_tree().change_scene("res://Scenes/Levels/Level1.tscn")
 			get_tree().change_scene("res://Scenes/Levels/Level"+str(data.level)+".tscn")
 		else:
 			get_tree().change_scene("res://Scenes/Levels/Level1.tscn")
